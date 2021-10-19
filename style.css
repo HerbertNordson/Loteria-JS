@@ -1,0 +1,224 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "Helvetica Neue", sans-serif;
+  color: #707070;
+}
+
+body {
+  background-color: #f7f7f7;
+}
+
+button,
+a {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+/* Header */
+
+header {
+  padding: 1em 10em;
+  border-bottom: 1px solid #ebebeb;
+}
+
+header a {
+  font-size: 4em;
+  text-decoration: none;
+  font-style: italic;
+  font-weight: 600;
+  border-bottom: 0.2em solid #b5c401;
+  border-radius: 0.2em;
+}
+
+/* Main */
+
+main {
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+  padding: 4em;
+}
+
+[data-js="content"] {
+  width: 60%;
+}
+
+/* Elements Section */
+
+[data-js="title"],
+[data-js="total"] {
+  text-transform: uppercase;
+  font-weight: normal;
+  font-style: italic;
+  margin-bottom: 1em;
+  font-size: 1.6em;
+}
+[data-js="total"] span {
+  font-style: normal;
+}
+[data-js="total"] {
+  margin-top: 2em;
+}
+[data-js="sub"] {
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.4em;
+  color: #868686;
+}
+[data-js="game-info"] {
+  font-style: italic;
+  font-size: 1.4em;
+  line-height: 1.4em;
+  color: #868686;
+  margin-bottom: 2em;
+}
+
+/* button types */
+
+[data-js="game-type"] > button {
+  padding: 0.5em 1em;
+  background: transparent;
+  border: 2px solid;
+  border-radius: 1em;
+  margin: 1em 1em 2em 0;
+  font-size: 1.4em;
+  font-weight: bold;
+  font-style: italic;
+}
+[data-js="lotofacil"] {
+  color: #7f3992;
+}
+[data-js="lotofacil"].ativo {
+  background-color: #7f3992;
+  border: 2px solid #7f3992;
+  color: #fff;
+}
+[data-js="mega-sena"] {
+  color: #01ac66;
+}
+[data-js="mega-sena"].ativo {
+  background-color: #01ac66;
+  border: 2px solid #01ac66;
+  color: #fff;
+}
+[data-js="lotomania"] {
+  color: #f79c31;
+}
+[data-js="lotomania"].ativo {
+  background-color: #f79c31;
+  border: 2px solid #f79c31;
+  color: #fff;
+}
+
+/* Numbers Button */
+
+[data-js="game-numbers"] {
+  margin: 1em 0;
+}
+[data-js="game-numbers"] button {
+  width: 3.5em;
+  height: 3.5em;
+  border-radius: 1.8em;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  background: #adc0c4;
+  font-size: 1.4em;
+  margin: 0 0.5em 1em 0;
+}
+[data-js="butons-bottom"] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 2em;
+}
+[data-js="complete-game"],
+[data-js="clear-game"] {
+  background: transparent;
+  border: 1px solid #27c383;
+  border-radius: 1em;
+  color: #27c383;
+  padding: 0.5em 1em;
+  font-size: 1.4em;
+  margin-right: 1em;
+}
+[data-js="add-cart"] {
+  color: #fff;
+  background-color: #27c383;
+  border: none;
+  padding: 0.5em 1em;
+  font-size: 1.4em;
+  border-radius: 1em;
+}
+/* Elements Sidebar */
+
+[data-js="cart"] {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 25em;
+  max-height: 100%;
+  background-color: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 1em;
+}
+[data-js="cart"] > div:nth-child(1) {
+  padding: 2em 2em 0;
+}
+[data-js="cart"] > div > ul {
+  padding: 0;
+}
+[data-js="cart"] > div > ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 18em;
+  list-style: none;
+  font-size: 0.8em;
+  font-weight: bold;
+  font-style: italic;
+  margin: 1em 0;
+}
+[data-js="del"] img {
+  width: 1.5em;
+  height: auto;
+  margin-right: 0.5em;
+}
+[data-js="cart"] > div > ul li p {
+  margin: 0.5em 1em;
+}
+[data-js="cart"] > div > ul li div {
+  border-left: 0.5em solid;
+  border-radius: 0.6em;
+}
+[data-js="game-price"] {
+  font-weight: normal;
+}
+/* Article and Elements */
+
+[data-js="save-cart"] {
+  width: 100%;
+  padding: 1em;
+  border: 1px solid #e2e2e2;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  background-color: #f4f4f4;
+  font-size: 2em;
+  font-weight: 600;
+  font-style: italic;
+  color: #27c383;
+}
+
+/* Footer */
+
+footer {
+  text-align: center;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+  padding: 2em;
+  margin-top: 4em;
+  border-top: 1px solid #ebebeb;
+}
