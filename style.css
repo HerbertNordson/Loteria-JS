@@ -14,6 +14,7 @@ a {
   cursor: pointer;
   background: transparent;
   border: none;
+  outline: none;
 }
 
 /* Header */
@@ -126,7 +127,7 @@ main {
   font-weight: 600;
   background: #adc0c4;
   font-size: 1.4em;
-  margin: 0 0.5em 1em 0;
+  margin: 0 0.5em 0.5em 0;
 }
 [data-js="butons-bottom"] {
   display: flex;
