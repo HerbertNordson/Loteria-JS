@@ -53,14 +53,14 @@ main {
   text-transform: uppercase;
   font-weight: normal;
   font-style: italic;
-  margin-bottom: 1em;
   font-size: 1.6em;
+  margin-bottom: 0.5em;
 }
 [data-js="total"] span {
   font-style: normal;
 }
 [data-js="total"] {
-  margin-top: 2em;
+  margin-top: 1em;
 }
 [data-js="sub"] {
   font-style: italic;
@@ -129,6 +129,11 @@ main {
   font-size: 1.4em;
   margin: 0 0.5em 0.5em 0;
 }
+
+[data-js="game-numbers"] button.ativo {
+  background-color: #b5c401;
+}
+
 [data-js="butons-bottom"] {
   display: flex;
   justify-content: space-between;
@@ -167,9 +172,14 @@ main {
 }
 [data-js="cart"] > div:nth-child(1) {
   padding: 2em 2em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 20em;
 }
 [data-js="cart"] > div > ul {
   padding: 0;
+  overflow: auto;
 }
 [data-js="cart"] > div > ul li {
   display: flex;
@@ -193,6 +203,7 @@ main {
 [data-js="cart"] > div > ul li div {
   border-left: 0.5em solid;
   border-radius: 0.6em;
+  width: inherit;
 }
 [data-js="game-price"] {
   font-weight: normal;
