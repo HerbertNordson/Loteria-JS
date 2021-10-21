@@ -91,26 +91,11 @@ main {
 [data-js="lotofacil"] {
   color: #7f3992;
 }
-[data-js="lotofacil"].ativo {
-  background-color: #7f3992;
-  border: 2px solid #7f3992;
-  color: #fff;
-}
 [data-js="mega-sena"] {
   color: #01ac66;
 }
-[data-js="mega-sena"].ativo {
-  background-color: #01ac66;
-  border: 2px solid #01ac66;
-  color: #fff;
-}
 [data-js="lotomania"] {
   color: #f79c31;
-}
-[data-js="lotomania"].ativo {
-  background-color: #f79c31;
-  border: 2px solid #f79c31;
-  color: #fff;
 }
 
 /* Numbers Button */
@@ -128,10 +113,6 @@ main {
   background: #adc0c4;
   font-size: 1.4em;
   margin: 0 0.5em 0.5em 0;
-}
-
-[data-js="game-numbers"] button.ativo {
-  background-color: #b5c401;
 }
 
 [data-js="butons-bottom"] {
