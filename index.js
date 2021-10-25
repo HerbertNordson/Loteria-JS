@@ -53,11 +53,11 @@
 			getData();
 			cartElementNew();
 			includePriceFinal();
-			teste();
+			buttonGame();
 			novo.firstElementChild.click();
 		}, false);
 			
-		function teste() {
+		function buttonGame() {
 			for (let typeGame of document.querySelectorAll('[data-js="game-type"] > button')) {
 				typeGame.addEventListener('click', (ev) => {
 					ev.preventDefault();
