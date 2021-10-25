@@ -160,13 +160,12 @@ main {
 }
 [data-js="cart"] > div > ul {
   padding: 0;
-  overflow: auto;
+  overflow-y: auto;
 }
 [data-js="cart"] > div > ul li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 18em;
   list-style: none;
   font-size: 0.8em;
   font-weight: bold;
@@ -182,12 +181,17 @@ main {
   margin: 0.5em 1em;
 }
 [data-js="cart"] > div > ul li div {
-  border-left: 0.5em solid;
   border-radius: 0.6em;
-  width: inherit;
+  min-width: 20em;
 }
 [data-js="game-price"] {
   font-weight: normal;
+}
+[class="cart-none"].ativo {
+  display: block;
+}
+[class="cart-none"] {
+  display: none !important;
 }
 /* Article and Elements */
 

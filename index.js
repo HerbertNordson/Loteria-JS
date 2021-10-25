@@ -17,14 +17,13 @@
 		let $numButtons;
 		let $color;
 
-		let price;
+		let price = 0;
 		let finalPrice = 0;
 		let lastPrice;
 		let countMaxNumber = 0;
-		let hasNumber = false;
 		let numberArr = [];
 
-		var ajax = new XMLHttpRequest();
+		const ajax = new XMLHttpRequest();
 		ajax.open('GET', '/games.json', true);
 		ajax.send();
 		ajax.addEventListener('readystatechange', parseData, false);
@@ -33,68 +32,64 @@
 		$clearGame.addEventListener('click', clearNumbers, false);
 		$randomGame.addEventListener('click', randomGame, false);
 
-		function initAction() {
-			window.addEventListener('load', (ev) => {
-				ev.preventDefault();
-				ev = document.querySelector('[data-js="lotofacil"]');
-				$type = ev.value;
-				ev.click();
-			}, false);
+		function cartElementNew() {
+			if($listCart.childElementCount === 1)
+			document.querySelector('.cart-none').classList.add('ativo')
 		}
 
-		for (let typeGame of document.querySelectorAll('[data-js="game-type"] > button')) {
-			typeGame.addEventListener('click', (ev) => {
-				ev.preventDefault();
-				let element = ev.target.closest('button');
-				$type = typeGame.value;
-				clearNumbers();
-				getData();
-				numbers();
-				typeGameActive($type, element);
-			})
+		function cartElementNone() {
+			document.querySelector('.cart-none').classList.remove('ativo');
 		}
 
-		function numbers() {
-			if (countMaxNumber <= $maxNumber) {
-				for (let e of document.querySelectorAll('.buttonNumbers')) {
+
+		function titleType() {
+			let $titleType = document.querySelector('[data-js="title-type"]');
+			return $titleType.innerHTML = `${$type}`;
+		}
+
+
+		window.addEventListener('load', (ev) => {
+			const novo = document.querySelector('[data-js="game-type"]');
+			getData();
+			cartElementNew();
+			includePriceFinal();
+			teste();
+			novo.firstElementChild.click();
+		}, false);
 			
-					e.addEventListener('click', (ev) => {
-						ev.preventDefault();
+		function teste() {
+			for (let typeGame of document.querySelectorAll('[data-js="game-type"] > button')) {
+				typeGame.addEventListener('click', (ev) => {
+					ev.preventDefault();
+					ev.target.classList.add('ativo');
+					$type = typeGame.value;
+					clearNumbers();
+					titleType();
+					cartElementNew();
+					getData();
+					netTest();
+				})
+			}
+		}
 
-						for (let i = 0; i < numberArr.length; i++) {
-							if (e.value === numberArr[i]) {
-								e.setAttribute('style', `background: ${$color}`);
-								numberArr.pop(numberArr[i]);
-								countMaxNumber--;
-								hasNumber = true;
-							}
-						}
+		function netTest() {
+			for (let typeGame of document.querySelectorAll('[data-js="game-type"] > button')) {
+				if (typeGame.className !== 'ativo') {
+					console.log(typeGame);
 					
-						if (!hasNumber) {
-
-							if (countMaxNumber >= $maxNumber) {
-								alert('Jogo completo! Finalize a aposta ou exclua um número.');
-								return;
-							}
-
-							e.setAttribute('style', `background: ${$color}`);
-							countMaxNumber++;
-							numberArr.push(e.value);
-						}
-					})
 				}
 			}
 		}
-	
+
 		function addCart() {
 			if (numberArr.length < $maxNumber) {
-				alert('Por favor, insira todos os números!');
+				alert('Restam ' + ($maxNumber - numberArr.length) + ' números para completar o jogo da ' + $type );
 				return;
 			}
 
-			const nmb = numberArr.reduce((acumulado, atual) => { return acumulado + ',' + atual }, '');
 			const li = document.createElement('li');
-			price = $price;
+			let nmb = numberArr.sort((a,b) => a - b);
+			price = +$price;
 			lastPrice = price;
 			finalPrice = +finalPrice + +price;
 			$listCart.append(li);
@@ -102,12 +97,14 @@
 			<button data-js="del">
 				<img src="https://cdn.icon-icons.com/icons2/1489/PNG/512/rubbishbin_102620.png" alt="" />
 			</button>
-			<div>
-				<p>${nmb}</p>
-				<p data-js="typegame">${$type}<span data-js="game-price"> R$ ${price}</span></p>
+			<div style='border-left: 0.5em solid ${$color}'>
+				<p>
+				${nmb}
+				</p>
+				<p data-js="typegame" style='color:${$color}; font-weight: bold;'>${$type}<span data-js="game-price"> R$ ${price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</span></p>
 			</div>
 		`;
-
+			cartElementNone();
 			includePriceFinal();
 			removeItemCart();
 			return clearNumbers();
@@ -121,20 +118,23 @@
 					if (element.parentNode) {
 						element.parentNode.removeChild(element);
 						finalPrice = +finalPrice - +lastPrice;
-						return includePriceFinal();
+						includePriceFinal();
+						cartElementNew();
 					}
 
 				}, false);
 			}
+			
 		}
 
 		function includePriceFinal() {
-			return $finalPrice.innerHTML = `${finalPrice.toFixed(2)}`;
+			return $finalPrice.innerHTML = `${finalPrice.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}`;
 		}
 
 		function getData() {
 			const type = parseData();
-			var description;
+			let description;
+			const typesGame = document.querySelector('[data-js="game-type"]');
 			for (let i of type.types) {
 				if (i.type === $type) {
 					description = i.description;
@@ -144,6 +144,18 @@
 					$color = i.color;
 				}
 			}
+
+			if (typesGame.childElementCount < type.types.length){
+				for (let index = 0; index < type.types.length; index++) {
+					const button = document.createElement('button');
+					typesGame.append(button);
+					button.innerHTML = `${type.types[index].type} `;
+					button.setAttribute('style', `color:${type.types[index].color}; background-color: transparent;`);
+					button.setAttribute('value', `${type.types[index].type}`);
+				}
+			}
+
+
 
 			$descption.innerHTML = description;
 			createNumbersButton($numButtons);
@@ -158,10 +170,13 @@
 			while (numberArr.length) {
 				numberArr.pop();
 			}
+
+			return clearNumbers;
 		}
 
 		function randomGame() {
-			for (let i = 0; i < $maxNumber; i++) {
+			let rd = $maxNumber - numberArr.length;
+			for (let i = 0; i < rd; i++) {
 				let random = Math.floor(Math.random() * $numButtons);
 				while (numberArr.indexOf(random) >= 0) {
 					random = Math.floor(Math.random() * $numButtons);
@@ -194,41 +209,35 @@
 				button.value = i;
 			}
 		
-			return numbers;
+			return numbers();
 		}
-
-		function typeGameActive(game, target) {
-			let type = game;
-			let element = target;
-			switch (type) {
-				case 'Mega-Sena':
-					addClass(element);
-					break;
-				case 'Quina':
-					addClass(element);
-					break;
-				case 'Lotofácil':
-					addClass(element);
-					break;
+		
+		function numbers() {
+			if (countMaxNumber <= $maxNumber) {
+				for (let e of document.querySelectorAll('.buttonNumbers')) {
+					e.addEventListener('click', (ev) => {
+					ev.preventDefault();
+						for (let i = 0; i < numberArr.length; i++) {
+							if (numberArr[i] === +e.value) {
+								e.removeAttribute('style');
+								numberArr.splice(numberArr.indexOf(numberArr[i]), 1);
+								countMaxNumber--;
+								return;
+							}
+						}
+						if (countMaxNumber < $maxNumber) {
+							e.setAttribute('style', `background: ${$color}`);
+							countMaxNumber++;
+							numberArr.push(e.value);
+						} else {
+							alert('Jogo completo! Por favor exclua um número ou finalize a sua aposta!');
+						}
+					})
+				}
 			}
-
 		}
 
-		function addClass(ev) {
-			if (ev.value === 'Mega-Sena') {
-				document.querySelector('[data-js="lotofacil"]').removeAttribute('style');
-				document.querySelector('[data-js="lotomania"]').removeAttribute('style');
-			} else if (ev.value === 'Quina') {
-				document.querySelector('[data-js="lotofacil"]').removeAttribute('style');
-				document.querySelector('[data-js="mega-sena"]').removeAttribute('style');
-			} else {
-				document.querySelector('[data-js="mega-sena"]').removeAttribute('style');
-				document.querySelector('[data-js="lotomania"]').removeAttribute('style');
-			}
 
-			return ev.setAttribute('style', `background: ${$color}; color: #fff;`);
-
-		}
 
 		function parseData() {
 			var result;
@@ -242,10 +251,9 @@
 		
 			return result;
 		}
-		
-		initAction();
+
 	})();
 
-	app();
+	app;
 
 })(window, document)
