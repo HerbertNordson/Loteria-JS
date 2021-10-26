@@ -16,7 +16,10 @@
 		let $price;
 		let $numButtons;
 		let $color;
-
+		let lastItem;
+		let novo;
+		let lastColor;
+		let init = true;
 		let price = 0;
 		let finalPrice = 0;
 		let lastPrice;
@@ -48,7 +51,7 @@
 		}
 
 
-		window.addEventListener('load', (ev) => {
+		window.addEventListener('load', () => {
 			const novo = document.querySelector('[data-js="game-type"]');
 			getData();
 			cartElementNew();
@@ -67,17 +70,25 @@
 					titleType();
 					cartElementNew();
 					getData();
-					netTest();
+					typeGame.style.backgroundColor = `${$color}`;
+					typeGame.style.color = `#fff`;
+					removeActiveClass(typeGame);
 				})
 			}
 		}
 
-		function netTest() {
-			for (let typeGame of document.querySelectorAll('[data-js="game-type"] > button')) {
-				if (typeGame.className !== 'ativo') {
-					console.log(typeGame);
-					
-				}
+		function removeActiveClass(ev) {
+			lastItem = ev;
+			if (!init) {
+				novo.style.color = `${lastColor}`;
+				novo.style.backgroundColor = `transparent`;
+				novo = lastItem;
+				lastColor = $color;
+			}
+			else {
+				init = false;
+				novo = lastItem;
+				lastColor = $color;
 			}
 		}
 
@@ -150,7 +161,7 @@
 					const button = document.createElement('button');
 					typesGame.append(button);
 					button.innerHTML = `${type.types[index].type} `;
-					button.setAttribute('style', `color:${type.types[index].color}; background-color: transparent;`);
+					button.setAttribute('style', `color:${type.types[index].color};`);
 					button.setAttribute('value', `${type.types[index].type}`);
 				}
 			}
@@ -163,35 +174,32 @@
 
 		function clearNumbers() {
 			countMaxNumber = 0;
+			while (numberArr.length) {
+				numberArr.pop();
+			}
 			for (let e of document.querySelectorAll('.buttonNumbers')) {
 				e.removeAttribute('style');
 			}
 
-			while (numberArr.length) {
-				numberArr.pop();
-			}
-
-			return clearNumbers;
+			return;
 		}
 
 		function randomGame() {
 			let rd = $maxNumber - numberArr.length;
 			for (let i = 0; i < rd; i++) {
-				let random = Math.floor(Math.random() * $numButtons);
+				let random = Math.floor((Math.random() * $numButtons) + 1);
 				while (numberArr.indexOf(random) >= 0) {
 					random = Math.floor(Math.random() * $numButtons);
 				}
 				numberArr.push(random);
 				countMaxNumber++;
 			}
-
 			if (numberArr.length === $maxNumber) {
 				for (let but of document.querySelectorAll('.buttonNumbers')) {
 					let buttonVal = +but.value;
 					for (let index = 0; index < numberArr.length; index++) {
 						if (buttonVal === numberArr[index])
 							but.setAttribute('style', `background:${$color};`)
-					
 					}
 				}
 			}

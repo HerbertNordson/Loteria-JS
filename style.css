@@ -161,6 +161,7 @@ main {
 [data-js="cart"] > div > ul {
   padding: 0;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 [data-js="cart"] > div > ul li {
   display: flex;
